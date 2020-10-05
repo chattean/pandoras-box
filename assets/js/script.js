@@ -85,7 +85,7 @@ var confirmToAddMoreCharfunction = function(){
   if (confirmToAddMoreChar){
     passwordCharacter()
   }else{
-    break;
+    return true;
   }
 }
 var passwordCharacter = function(){
@@ -98,11 +98,39 @@ var passwordCharacter = function(){
 
   characterTypeChoice = parseInt(characterTypeChoice);
   var confirmToAddMoreChar = true;
-
+// Case statements will all the Character Types choices : While loops check for Validity of the user input
   switch(characterTypeChoice){
+    // for lower case char 
     case 1:
-      var lowerCaseChar = prompt("Please enter the lower case letter that you want in your Secure Password:");
+      var lowerCaseChar = prompt("Please enter the lower case letter (a,b,c,d...z) that you want in your Secure Password:");
+      while((alphabetLowerCase.indexOf(lowerCaseChar)=== -1) || (lowerCaseChar.length !==1) || (lowerCaseChar === null)){
+        lowerCaseChar = prompt("You didn't enter a lower case letter or enterd more than One Character,\nPlease enter the lower case letter (a,b,c,d...z) that you want in your Secure Password:");
+      };
       passwordCriteriaCharacters += lowerCaseChar;
+      confirmToAddMoreCharfunction();
+      break;
+    case 2:
+      var upperCaseChar = prompt("Please enter the Upper Case letter (A,B,C,D...Z) that you want in your Secure Password:");
+      while((alphabetUpperCase.indexOf(upperCaseChar)=== -1) || (upperCaseChar.length !== 1) || (upperCaseChar === null)){
+        upperCaseChar = prompt("You didn't enter a Upper Case letter or entered more than One Character,\nPlease enter the lower case letter  that you want in your Secure Password:");
+      };
+      passwordCriteriaCharacters += upperCaseChar;
+      confirmToAddMoreCharfunction();
+      break;
+    case 3:
+      var numericalChar = prompt("Please enter a Number between 0 and 9 that you want in your Secure Password :");
+      while((numbersChars.indexOf(numericalChar)=== -1)|| (numericalChar.length !== 1)|| (numericalChar === null)){
+        numericalChar = prompt("You didn't enter a number between 0-9 or enterd more than One Number,\nPlease try again");
+      };
+      passwordCriteriaCharacters += numericalChar;
+      confirmToAddMoreCharfunction();
+      break;
+    case 4:
+      var specialChar = prompt("Please enter the special character that you want in your Secure Password: Here are the acceptable special chars\n" + specialChars);
+      while((specialChars.indexOf(specialChar)=== -1) || (specialChar.length !== 1) || (specialChar === null)){
+        specialChar = prompt("You didn't enter a Special Character or enterd more than One Special Character,\nPlease enter one of these\n" + specialChars)
+      };
+      passwordCriteriaCharacters += specialChar;
       confirmToAddMoreCharfunction();
       break;
     default:
@@ -110,12 +138,12 @@ var passwordCharacter = function(){
       passwordCharacter();
       break;
   }
-
   return passwordCriteriaCharacters;
 
 }
 // setup up all different character types
 var alphabetLowerCase = "abcdefghijklmnopqrstuvwxyz";
+// fancy way to get all the uppercase characters
 var alphabetUpperCase = alphabetLowerCase.toUpperCase();
 var numbersChars = "0123456789";
 var specialChars =  "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
@@ -123,7 +151,7 @@ var passwordLength = 0;
 var passwordCriteriaCharacters = ""
 var securePassword = "";
 
-// the Full entireset
+// the Full entireset of all the Character, This is to fill up all the other spaces that user has not specified
 fullCharacterSet = alphabetLowerCase + alphabetUpperCase + numbersChars + specialChars
 
 //generate password function
@@ -148,10 +176,8 @@ function newFunction() {
 // Write password to the #password input
 function writePassword() {
   var securePassword = generatePassword();
-  console.log(securePassword)
   var passwordText = document.querySelector("#password");
   passwordText.value = securePassword;
-  console.log(passwordText.value)
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
